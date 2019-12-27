@@ -1,0 +1,36 @@
+import &ArtSuite
+
+class ToDoModel extends ApplicationState
+  @stateFields list: []
+
+  addItem:    (text) -> @list = [] @list..., {} text, id: getElementById()
+  deleteItem: (id)   -> @list = array i from @list when i.id != item.id
+
+class ToDoItem extends FluxComponent
+  render: ->
+    @props.item extract text, id
+    Element
+      TextElement {} text
+      TextElement text: " - " on: pointerClick: -> @models.toDoModel.deleteItem id
+
+class ToDo extends FluxComponent
+  @subscriptions :toDoModel.list
+  @stateFields text: ""
+
+  createNewToDoItem: ->
+    return alert "Please enter a text!" unless @text
+    @models.toDoModel.addItem @text
+    @resetText()
+  
+  render: ->
+    Element
+      :column
+      array item in @list with ToDoItem {} item, key: itemid
+      
+      TextInputElement {} text, on: 
+        change:   ({target:{value}}) -> @text = value
+        enter:    @createNewToDoItem 
+
+      TextElement text: " - " on: pointerClick: @createNewToDoItem
+
+ArtSuiteInit(ToDo)
