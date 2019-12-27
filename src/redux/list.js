@@ -21,20 +21,20 @@ store.injectReducer(storeKey, (state = initialState, { type, payload }) =>
 );
 
 // HELPERS
-const getList = () => store.getState()[storeKey]
+const getState = () => store.getState()[storeKey]
 
 const subscribeToList = f => {
-  let lastList = getList();
+  let lastState = getState();
   return store.subscribe(
-    () => lastList !== getList() && f((lastList = getList()))
+    () => lastState !== getState() && f((lastState = getState()))
   );
 }
 
 // EXPORTS
 export const useList = () => {
-  const [list, setList] = useState(getList())
-  useLayoutEffect(() => subscribeToList(setList))
-  return list;
+  const [state, setState] = useState(getState())
+  useLayoutEffect(() => subscribeToList(setState))
+  return state;
 }
 
 export const addItem = item => store.dispatch({ type: "addItem", payload: item })
