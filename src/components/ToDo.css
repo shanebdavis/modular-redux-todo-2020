@@ -56,3 +56,12 @@
   width: 80%;
   margin: 0 auto;
 }
+
+
+.ToDo input {
+  width: 60%;
+  padding: 10px;
+  font-size: 1em;
+  margin: 10px auto;
+  box-shadow: 1px 3px 20px 0px rgba(0, 0, 0, 0.3);
+}
