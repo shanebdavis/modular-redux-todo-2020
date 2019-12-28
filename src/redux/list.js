@@ -33,7 +33,7 @@ const subscribeToList = f => {
 // EXPORTS
 export const useList = () => {
   const [state, setState] = useState(getState())
-  useLayoutEffect(() => subscribeToList(setState))
+  useLayoutEffect(() => subscribeToList(setState), [setState])
   return state;
 }
 
